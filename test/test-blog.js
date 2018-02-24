@@ -1,13 +1,15 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
+const faker = require('faker')
+const mongoose = require('mongoose');
+
 chai.use(chaiHttp);
 const expect = chai.expect;
+
 const { BlogPost } = require('../models');
 const { app, runServer, closeServer } = require('../server');
 const { TEST_DATABASE_URL } = require('../config');
-const faker = require('faker')
 
-const mongoose = require('mongoose');
 
 function createBlogPost(){
 	const blogPost =  {
@@ -17,12 +19,12 @@ function createBlogPost(){
 		},
 		title: faker.lorem.words(),
 		content: faker.lorem.paragraph(),
-		created: faker.date.past(),
+		// created: faker.date.past(),
 	};
 	return blogPost
 }
 function seedBlogData(){
-	console.info('seeding blogpost data')
+	// console.info('seeding blogpost data')
 	const seedData = [];
 	for (let i=0; i<10; i++){
 		seedData.push(createBlogPost())
@@ -30,7 +32,7 @@ function seedBlogData(){
 	return BlogPost.insertMany(seedData); //promise
 }
 function tearDownDb(){
-	console.warn('deleting database')
+	// console.warn('deleting database')
 	return mongoose.connection.dropDatabase();
 }
 
@@ -149,6 +151,7 @@ describe('BlogPosts resource', function(){
 				})
 				.then(function(res){
 					expect(res).to.have.status(400)
+					console.log('hello there');
 				})
 				.catch(err=> {
 					expect(err)

@@ -11,7 +11,7 @@ const { BlogPost } = require('./models');
 
 const app = express();
 
-app.use(morgan('common'));
+// app.use(morgan('common'));
 app.use(bodyParser.json());
 
 app.get('/posts', (req, res) => {
